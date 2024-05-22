@@ -7,7 +7,7 @@ from util_display_img import plot
 
 plot_size = (4,3)
 
-def apply_highpass_filters(data, filter_name):
+def conv_highpass(data, filter_name):
     # 高通濾波器
     filters = []
     
@@ -39,7 +39,7 @@ def apply_highpass_filters(data, filter_name):
         return gauss_highpass
 
 
-def apply_lowpass_filters(data, filter_name):
+def conv_lowpass(data, filter_name):
     # 低通濾波器
     filters = []
     
@@ -79,8 +79,8 @@ if __name__ == '__main__':
     data = np.array(im, dtype=float)
 
     # 應用濾波器
-    highpass_filters = apply_highpass_filters(data, filter_name='3x3')
-    lowpass_filters = apply_lowpass_filters(data, filter_name='3x3')
+    highpass_filters = conv_highpass(data, filter_name='3x3')
+    lowpass_filters = conv_lowpass(data, filter_name='3x3')
 
     # 繪圖
     plt.figure(figsize=(10, 15))
