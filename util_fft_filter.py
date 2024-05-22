@@ -16,10 +16,10 @@ def fft_highpass(img):
                         [-1, -1, -1],
                         [-1,  8, -1], 
                         [-1, -1, -1]])
-    # kernel = np.array([
-    #                     [ 0, -1,  0],
-    #                     [-1,  4, -1], 
-    #                     [ 0, -1,  0]])
+    kernel = np.array([
+                        [ 0, -1,  0],
+                        [-1,  4, -1], 
+                        [ 0, -1,  0]])
 
     # Pad the kernel to the size of the image and shift the kernel center to the center of the image
     kernel_padded = np.zeros_like(img)
@@ -44,13 +44,10 @@ def fft_highpass(img):
     # Inverse FFT to get the filtered image back in spatial domain
     img_freq = np.fft.ifft2(fshift)
     img_filtered = np.real(img_freq)
-
     # Normalize the highpass filter output
-    img_filtered = (
-        (img_filtered - img_filtered.min())
-        / (img_filtered.max() - img_filtered.min())
-        * 255
-    )
+    img_filtered = np.uint8(np.abs(img_freq))
+    # img_filtered[img_filtered>50] = 255 
+
 
     return img_filtered, fft_kernel
 
@@ -83,12 +80,10 @@ def fft_lowpass(img, kernel_size=9):
     img_freq = np.fft.ifft2(fshift)
     img_filtered = np.real(img_freq)
 
-    # Normalize the lowpass filter output
-    img_filtered = (
-        (img_filtered - img_filtered.min())
-        / (img_filtered.max() - img_filtered.min())
-        * 255
-    )
+    # Normalize the highpass filter output
+    img_filtered = np.uint8(np.abs(img_freq))
+
+
     return img_filtered, fft_kernel
 
 
@@ -122,3 +117,4 @@ if __name__ == "__main__":
 
     plt.tight_layout()
     plt.show()
+

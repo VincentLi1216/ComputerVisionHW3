@@ -12,42 +12,59 @@ def main():
     plot_size = (3,2)
 
     # Load the image and convert to grayscale
-    im = Image.open('imgs/Lenna.jpg')
+    im = Image.open('imgs/white_house.png')
     if im.mode != 'L':
         im = im.convert('L')  # 轉換為灰度影像
     img = np.array(im, dtype=float)
 
-    high_pass_fft, kernel_fft = fft_highpass(img)
 
-    kernel_img = Image.open('imgs/highpass_kernal.png')
-    img_fft = img2fft(im)
+    '''
+    highpass filter
+    '''
+    high_pass_fft, high_kernel_fft = fft_highpass(img)
+
+    # kernel array
+    high_kernel_img = Image.open('imgs/highpass_kernal.png')
 
 
+    '''
+    lowpass filter
+    '''
+    low_pass, low_kernel_fft = fft_lowpass(img, 5)
+
+
+    low_kernel_img = Image.open('imgs/lowpass_kernal.png')
+    '''
+    highpass plot
+    '''
     plt.figure(figsize=(5, 10))
     plot(img, 'Original',1, plot_size=plot_size)
-    # plot(high_pass_fft, 'Highpass Filtered (Freq Domain)', 2, plot_size=plot_size)
-    plot(img_fft, "img fft", 2, plot_size=plot_size, is_fft=True)
-    plot(kernel_img, 'Highpass Filter Kernel', 3, plot_size=plot_size)
-    plot(kernel_fft, 'Highpass Filter Kernel', 4, is_fft=True, plot_size=plot_size)
+    plot(img2fft(im), "img fft", 2, plot_size=plot_size, is_fft=True)
+    plot(high_kernel_img, 'Highpass Filter Kernel', 3, plot_size=plot_size)
+    plot(high_kernel_fft, 'Highpass FilteraKernel', 4, is_fft=True, plot_size=plot_size)
     plot(high_pass_fft, 'Highpass Filtered (Freq Domain)', 5, plot_size=plot_size)
     plot(img2fft(high_pass_fft), 'Highpass Filtered (Freq Domain)', 6, is_fft=True, plot_size=plot_size)
+    
+    plt.tight_layout()
+    plt.show()
  
+    '''
+    lowpass plot
+    '''
+    plt.figure(figsize=(5, 5))
+    plot(img, 'Original', 1, plot_size=plot_size)
+    plot(img2fft(im), "img fft", 2, plot_size=plot_size, is_fft=True)
+    plot(low_kernel_fft, 'Lowpass Filter Kernel', 3, is_fft=True, plot_size=plot_size)
+    plot(low_pass, 'Lowpass Filtered (Freq Domain)', 4, plot_size=plot_size)
+    plot(img2fft(low_pass), 'Lowpass Filtered (Freq Domain)', 5, is_fft=True, plot_size=plot_size)
+
+
+
+
     plt.tight_layout()
     plt.show()
 
-    low_pass, kernel_fft = fft_lowpass(img, 5)
 
-    plt.figure(figsize=(5, 10))
-    plot(img, 'Original', 1)
-    plot(low_pass, 'Lowpass Filtered (Freq Domain)', 2)
-    plot(kernel_fft, 'Lowpass Filter Kernel', 3, is_fft=True)
-
-    save_img(high_pass_fft, 'output/fft_high_pass.png')
-    # save_img(low_pass, 'output/fft_low_pass.png')
-    # save_img(kernel_fft, 'output/fft_low_pass_kernel.png', True)
-
-    plt.tight_layout()
-    plt.show()
     
 
 
