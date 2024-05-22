@@ -30,14 +30,14 @@ def main():
     '''
     lowpass filter
     '''
-    low_pass, low_kernel_fft = fft_lowpass(img, 5)
+    low_pass_fft, low_kernel_fft = fft_lowpass(img, 5)
 
 
     low_kernel_img = Image.open('imgs/lowpass_kernal.png')
     '''
     highpass plot
     '''
-    plt.figure(figsize=(5, 10))
+    plt.figure(figsize=(10, 10))
     plot(img, 'Original',1, plot_size=plot_size)
     plot(img2fft(im), "img fft", 2, plot_size=plot_size, is_fft=True)
     plot(high_kernel_img, 'Highpass Filter Kernel', 3, plot_size=plot_size)
@@ -51,12 +51,13 @@ def main():
     '''
     lowpass plot
     '''
-    plt.figure(figsize=(5, 5))
+    plt.figure(figsize=(10, 10))
     plot(img, 'Original', 1, plot_size=plot_size)
-    plot(img2fft(im), "img fft", 2, plot_size=plot_size, is_fft=True)
-    plot(low_kernel_fft, 'Lowpass Filter Kernel', 3, is_fft=True, plot_size=plot_size)
-    plot(low_pass, 'Lowpass Filtered (Freq Domain)', 4, plot_size=plot_size)
-    plot(img2fft(low_pass), 'Lowpass Filtered (Freq Domain)', 5, is_fft=True, plot_size=plot_size)
+    plot(img2fft(im), "Original(fft)", 2, plot_size=plot_size, is_fft=True)
+    plot(low_kernel_img, 'Lowpass Filter Kernel', 3, plot_size=plot_size)
+    plot(low_kernel_fft, 'Lowpass Filter Kernel(fft)', 4, is_fft=True, plot_size=plot_size)
+    plot(low_pass_fft, 'Lowpass Filtered', 5, plot_size=plot_size)
+    plot(img2fft(low_pass_fft), 'Lowpass Filtered(fft)', 6, is_fft=True, plot_size=plot_size)
 
 
 
