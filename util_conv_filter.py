@@ -13,11 +13,13 @@ def conv_highpass(data, filter_name):
     
     if filter_name == '3x3':
         # 簡單的 3x3 高通濾波器
-        kernel_highpass_3x3 = np.array([[-1, -1, -1],
-                                        [-1,  8, -1],
-                                        [-1, -1, -1]])
+        kernel_highpass_3x3 = np.array([[ 0, -1,  0],
+                                        [-1,  4, -1],
+                                        [ 0, -1,  0]])
         highpass_3x3 = ndimage.convolve(data, kernel_highpass_3x3)
-        highpass_3x3 = (highpass_3x3 - highpass_3x3.min()) / (highpass_3x3.max() - highpass_3x3.min()) * 255
+        highpass_3x3 = np.real(highpass_3x3)
+        highpass_3x3 = np.uint8(np.abs(highpass_3x3))
+        # highpass_3x3 = (highpass_3x3 - highpass_3x3.min()) / (highpass_3x3.max() - highpass_3x3.min()) * 255
         return highpass_3x3
 
     if filter_name == '5x5':

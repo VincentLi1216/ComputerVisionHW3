@@ -39,11 +39,11 @@ def main():
     '''
     plt.figure(figsize=(10, 10))
     plot(img, 'Original',1, plot_size=plot_size)
-    plot(img2fft(im), "img fft", 2, plot_size=plot_size, is_fft=True)
+    plot(img2fft(im), "Original(fft)", 2, plot_size=plot_size, is_fft=True)
     plot(high_kernel_img, 'Highpass Filter Kernel', 3, plot_size=plot_size)
-    plot(high_kernel_fft, 'Highpass FilteraKernel', 4, is_fft=True, plot_size=plot_size)
-    plot(high_pass_fft, 'Highpass Filtered (Freq Domain)', 5, plot_size=plot_size)
-    plot(img2fft(high_pass_fft), 'Highpass Filtered (Freq Domain)', 6, is_fft=True, plot_size=plot_size)
+    plot(high_kernel_fft, 'Highpass Filter Kernel(fft)', 4, is_fft=True, plot_size=plot_size)
+    plot(high_pass_fft, 'Highpass Filtered', 5, plot_size=plot_size)
+    plot(img2fft(high_pass_fft), 'Highpass Filtered(fft)', 6, is_fft=True, plot_size=plot_size)
     
     plt.tight_layout()
     plt.show()
@@ -59,9 +59,17 @@ def main():
     plot(low_pass_fft, 'Lowpass Filtered', 5, plot_size=plot_size)
     plot(img2fft(low_pass_fft), 'Lowpass Filtered(fft)', 6, is_fft=True, plot_size=plot_size)
 
+    plt.tight_layout()
+    plt.show()
 
-
-
+    '''
+    conv filter
+    '''
+    conv_highpass_filters = conv_highpass(img, filter_name='3x3')
+    conv_lowpass_filters = conv_lowpass(img, filter_name='5x5')
+    plt.figure(figsize=(10, 10))
+    plot(conv_highpass_filters, "highpass(conv)", 1, plot_size=plot_size)
+    plot(conv_lowpass_filters, "lowpass(conv)", 2, plot_size=plot_size)
     plt.tight_layout()
     plt.show()
 
